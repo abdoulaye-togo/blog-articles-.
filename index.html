@@ -1,0 +1,48 @@
+<?php
+// 1. Connexion à la base de données MySQL (blog_stage)
+try {
+    $db = new PDO('mysql:host=localhost;dbname=blog_stage;charset=utf8', 'root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $e) {
+    die('Erreur de connexion à la base de données : ' . $e->getMessage());
+}
+
+// 2. Récupération de tous les articles
+$requete = $db->query('SELECT * FROM articles ORDER BY cree_le DESC');
+$articles = $requete->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Blog Stage</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        .article { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .article h2 { margin-top: 0; color: #007bff; }
+        .meta { color: #777; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenue sur mon blog</h1>
+
+    <?php if (!empty($articles)): ?>
+        <?php foreach ($articles as $article): ?>
+            <div class="article">
+                <h2><?= htmlspecialchars($article['titre']) ?></h2>
+                <p><?= nl2br(htmlspecialchars($article['contenu'])) ?></p>
+                <div class="meta">
+                    Publié par <strong><?= htmlspecialchars($article['auteur']) ?></strong> le <?= htmlspecialchars($article['cree_le']) ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Aucun article trouvé.</p>
+    <?php endif; ?>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+# fichier de configuration et mots de passe
+config.php
+db.php
+.env
+
+# fichiers temporaires et logs
+*.log 
+.DS_Store
+thumbs.db
