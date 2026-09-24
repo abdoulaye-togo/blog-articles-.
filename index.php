@@ -1,4 +1,4 @@
-<?php
+<?php // Modification pour le second commit ?>).
 // 1. Connexion à la base de données
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=blog_stage;charset=utf8', 'root', '');
